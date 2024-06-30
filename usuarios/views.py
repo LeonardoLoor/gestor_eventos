@@ -18,15 +18,19 @@ def registro(request):
     if request.method == 'POST':
         form = RegistroForm(request.POST)
         if form.is_valid():
-            user = form.save()
-            enviar_correo_confirmacion(user)
-            messages.success(request, 'Registro exitoso. Revisa tu correo electrónico para la confirmación.')
-            return redirect('login')
+            try:
+                user = form.save()
+                enviar_correo_confirmacion(user)
+                messages.success(request, 'Registro exitoso. Revisa tu correo electrónico para la confirmación.')
+                return redirect('login')
+            except Exception as e:
+                messages.error(request, f'Error en el registro: {e}')
         else:
             messages.error(request, 'Error en el registro. Por favor, intenta nuevamente.')
     else:
         form = RegistroForm()
     return render(request, 'usuarios/registro.html', {'form': form})
+
 
 def login(request):
     if request.method == 'POST':
