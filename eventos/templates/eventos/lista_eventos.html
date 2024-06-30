@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Eventos{% endblock %}
+
+{% block content %}
+<h2>Lista de Eventos</h2>
+
+<form method="get" action=".">
+    <input type="text" name="q" placeholder="Buscar eventos..." value="{{ query }}">
+    <button type="submit">Buscar</button>
+</form>
+
+<ul>
+    {% for evento in page_obj %}
+        <li>
+            <a href="{% url 'detalle_evento' evento.id %}">{{ evento.nombre }}</a>
+        </li>
+    {% endfor %}
+</ul>
+
+<div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <a href="?page=1">&laquo; primero</a>
+            <a href="?page={{ page_obj.previous_page_number }}">anterior</a>
+        {% endif %}
+
+        <span class="current">
+            Página {{ page_obj.number }} de {{ page_obj.paginator.num_pages }}.
+        </span>
+
+        {% if page_obj.has_next %}
+            <a href="?page={{ page_obj.next_page_number }}">siguiente</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}">último &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+{% endblock %}

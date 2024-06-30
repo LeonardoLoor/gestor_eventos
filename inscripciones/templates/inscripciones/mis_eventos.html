@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block title %}Mis Eventos{% endblock %}
+
+{% block content %}
+<h2>Mis Eventos</h2>
+<ul>
+    {% for inscripcion in inscripciones %}
+        <li>{{ inscripcion.evento.nombre }}</li>
+    {% endfor %}
+</ul>
+{% endblock %}

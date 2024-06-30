@@ -1,0 +1,15 @@
+{% extends "base.html" %}
+
+{% block title %}Detalles del Evento{% endblock %}
+
+{% block content %}
+<h2>{{ evento.nombre }}</h2>
+<p>{{ evento.descripcion }}</p>
+<p>{{ evento.ubicacion }}</p>
+<p>{{ evento.fecha_hora }}</p>
+<a href="{% url 'inscribir' evento.id %}">Inscribirse</a>
+{% if request.user == evento.creador %}
+    <a href="{% url 'editar_evento' evento.id %}">Editar</a>
+    <a href="{% url 'eliminar_evento' evento.id %}">Eliminar</a>
+{% endif %}
+{% endblock %}
