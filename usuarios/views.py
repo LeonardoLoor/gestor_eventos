@@ -7,6 +7,13 @@ from django.conf import settings
 from .models import Usuario
 from .forms import RegistroForm
 
+def enviar_correo_confirmacion(usuario):
+    subject = 'Bienvenido a Gestor de Eventos'
+    message = f'Hola {usuario.nombre},\n\nGracias por registrarte en Gestor de Eventos.'
+    email_from = settings.DEFAULT_FROM_EMAIL
+    recipient_list = [usuario.email]
+    send_mail(subject, message, email_from, recipient_list)
+
 def registro(request):
     if request.method == 'POST':
         form = RegistroForm(request.POST)
@@ -39,10 +46,3 @@ def logout(request):
     auth_logout(request)
     messages.success(request, 'Has cerrado sesión correctamente.')
     return redirect('login')
-
-def enviar_correo_confirmacion(usuario):
-    subject = 'Bienvenido a Gestor de Eventos'
-    message = f'Hola {usuario.nombre},\n\nGracias por registrarte en Gestor de Eventos.'
-    email_from = settings.DEFAULT_FROM_EMAIL
-    recipient_list = [usuario.email]
-    send_mail(subject, message, email_from, recipient_list)
