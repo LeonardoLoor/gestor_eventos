@@ -1,10 +1,26 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
+}
+
+.card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
 h2 {
     color: #333;
+}
+
+form .form-group {
+    margin-bottom: 1.5rem;
+}
+
+.form-control {
+    margin-bottom: 0.5rem;
 }
 
 ul {
@@ -21,15 +37,36 @@ form {
 }
 
 button {
-    background-color: #4CAF50;
+    background-color: #007bff;
     color: white;
-    padding: 10px;
     border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
     cursor: pointer;
 }
 
 button:hover {
-    background-color: #45a049;
+    background-color: #0056b3;
+}
+
+.navbar-brand {
+    margin-right: auto;
+}
+
+.nav-item {
+    margin-left: 20px;
+}
+
+.navbar-nav .nav-item:last-child {
+    margin-right: 0;
+}
+
+.navbar-nav .nav-item a {
+    color: #555;
+}
+
+.navbar-nav .nav-item a:hover {
+    color: #007bff;
 }
 
 nav ul {

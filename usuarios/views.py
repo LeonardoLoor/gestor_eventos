@@ -6,6 +6,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from .models import Usuario
 from .forms import RegistroForm
+from .forms import LoginForm
 
 def enviar_correo_confirmacion(usuario):
     subject = 'Bienvenido a Gestor de Eventos'
@@ -31,19 +32,23 @@ def registro(request):
         form = RegistroForm()
     return render(request, 'usuarios/registro.html', {'form': form})
 
-
 def login(request):
     if request.method == 'POST':
-        form = AuthenticationForm(request, data=request.POST)
+        form = LoginForm(data=request.POST)
         if form.is_valid():
-            user = form.get_user()
-            auth_login(request, user)
-            messages.success(request, 'Inicio de sesión exitoso.')
-            return redirect('lista_eventos')
+            username = form.cleaned_data.get('username')
+            password = form.cleaned_data.get('password')
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                auth_login(request, user)
+                messages.success(request, f'Bienvenido, {username}')
+                return redirect('pagina_inicio')
+            else:
+                messages.error(request, 'Usuario o contraseña incorrectos')
         else:
-            messages.error(request, 'Error en el inicio de sesión. Por favor, intenta nuevamente.')
+            messages.error(request, 'Error en el formulario. Por favor, intenta nuevamente.')
     else:
-        form = AuthenticationForm()
+        form = LoginForm()
     return render(request, 'usuarios/login.html', {'form': form})
 
 def logout(request):

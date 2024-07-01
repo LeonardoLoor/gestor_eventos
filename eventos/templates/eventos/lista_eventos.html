@@ -3,20 +3,24 @@
 {% block title %}Lista de Eventos{% endblock %}
 
 {% block content %}
-<h2>Lista de Eventos</h2>
-
-<form method="get" action=".">
-    <input type="text" name="q" placeholder="Buscar eventos..." value="{{ query }}">
-    <button type="submit">Buscar</button>
-</form>
-
-<ul>
-    {% for evento in page_obj %}
-        <li>
-            <a href="{% url 'detalle_evento' evento.id %}">{{ evento.nombre }}</a>
-        </li>
-    {% endfor %}
-</ul>
+<div class="d-flex justify-content-center align-items-center min-vh-100">
+    <div class="w-75">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h2 class="mb-0">Lista de Eventos</h2>
+            <form class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Buscar" aria-label="Buscar">
+                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit">Buscar</button>
+            </form>
+        </div>
+        <div class="list-group">
+            {% for evento in eventos %}
+                <a href="{% url 'detalle_evento' evento.id %}" class="list-group-item list-group-item-action">
+                    {{ evento.nombre }} - {{ evento.fecha_hora }}
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+</div>
 
 <div class="pagination">
     <span class="step-links">
