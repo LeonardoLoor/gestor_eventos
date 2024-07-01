@@ -65,9 +65,11 @@ button:hover {
     color: #555;
 }
 
-.navbar-nav .nav-item a:hover {
-    color: #007bff;
+.nav-link:hover {
+    background-color: #007bff; /* Mismo color que los botones */
+    color: #fff; /* Color blanco para el texto */
 }
+
 
 nav ul {
     display: flex;
@@ -82,11 +84,7 @@ nav ul li {
 nav ul li a {
     text-decoration: none;
     padding: 10px 20px;
-    background-color: #4CAF50;
+    background-color: #007bff;
     color: white;
     border-radius: 5px;
-}
-
-nav ul li a:hover {
-    background-color: #45a049;
 }

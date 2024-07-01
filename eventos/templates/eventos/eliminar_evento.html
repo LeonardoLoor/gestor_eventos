@@ -3,11 +3,24 @@
 {% block title %}Eliminar Evento{% endblock %}
 
 {% block content %}
-<h2>Eliminar Evento</h2>
-<p>¿Estás seguro de que deseas eliminar el evento "{{ evento.nombre }}"?</p>
-<form method="post">
-    {% csrf_token %}
-    <button type="submit">Eliminar</button>
-    <a href="{% url 'detalle_evento' evento.id %}">Cancelar</a>
-</form>
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">¿Estás seguro de que deseas eliminar este evento?</h2>
+    <div class="card p-4 shadow">
+        <div class="mb-3">
+            <strong>Nombre:</strong>
+            <p>{{ evento.nombre }}</p>
+        </div>
+        <div class="mb-3">
+            <strong>Descripción:</strong>
+            <p>{{ evento.descripcion }}</p>
+        </div>
+        <div class="d-flex justify-content-center">
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger mx-2">Eliminar</button>
+            </form>
+            <a href="{% url 'detalle_evento' evento.id %}" class="btn btn-primary mx-2">Cancelar</a>
+        </div>
+    </div>
+</div>
 {% endblock %}

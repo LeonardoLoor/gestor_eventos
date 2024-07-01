@@ -3,11 +3,12 @@
 {% block title %}Editar Evento{% endblock %}
 
 {% block content %}
-<h2>Editar Evento</h2>
-<form method="post">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <button type="submit">Actualizar</button>
-</form>
-<a href="{% url 'detalle_evento' evento.id %}">Cancelar</a>
+<div class="container mt-5">
+    <h2 class="mb-4">Editar Evento</h2>
+    <form method="post" class="needs-validation" novalidate>
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+    </form>
+</div>
 {% endblock %}

@@ -23,5 +23,5 @@ urlpatterns = [
     path('usuarios/', include('usuarios.urls')),
     path('eventos/', include('eventos.urls')),
     path('inscripciones/', include('inscripciones.urls')),
-    path('', eventos_views.pagina_inicio, name='pagina_inicio'),  # Añadir esta línea
+    path('', eventos_views.pagina_inicio, name='pagina_inicio'),
 ]
