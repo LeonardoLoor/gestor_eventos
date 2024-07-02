@@ -1,8 +1,12 @@
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f4;
+}
+
+.container {
+    padding: 20px;
 }
 
 .card {
@@ -11,11 +15,13 @@ body {
     box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-h2 {
+h1, h2, h3, h4, h5, h6 {
     color: #333;
+    font-weight: bold;
+    margin-bottom: 20px;
 }
 
-form .form-group {
+.form-group {
     margin-bottom: 1.5rem;
 }
 
@@ -50,7 +56,14 @@ button:hover {
 }
 
 .navbar-brand {
+    display: flex;
+    align-items: center;
     margin-right: auto;
+}
+
+.navbar-logo {
+    height: 50px; /* Ajustar el tamaño del logo */
+    margin-right: 10px;
 }
 
 .nav-item {
@@ -63,28 +76,85 @@ button:hover {
 
 .navbar-nav .nav-item a {
     color: #555;
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s, color 0.3s; /* Efecto de transición */
 }
 
-.nav-link:hover {
+.navbar-nav .nav-item a:hover {
     background-color: #007bff; /* Mismo color que los botones */
     color: #fff; /* Color blanco para el texto */
 }
 
-
-nav ul {
+.d-flex {
     display: flex;
-    gap: 10px;
-    padding: 0;
 }
 
-nav ul li {
-    list-style: none;
+.justify-content-center {
+    justify-content: center;
 }
 
-nav ul li a {
-    text-decoration: none;
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border-radius: 5px;
+.align-items-center {
+    align-items: center;
+}
+
+.min-vh-100 {
+    min-height: 100vh;
+}
+
+.img-fluid {
+    max-width: 100%;
+    height: auto;
+}
+
+.container img {
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+}
+
+.text-center {
+    text-align: center;
+}
+
+.mt-4 {
+    margin-top: 1.5rem;
+}
+
+.mb-4 {
+    margin-bottom: 1.5rem;
+}
+
+.p-4 {
+    padding: 1.5rem;
+}
+
+.shadow {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.row {
+    display: flex;
+    align-items: center;
+}
+
+.col-md-6 {
+    flex: 1;
+    padding: 10px;
+}
+
+.welcome-image {
+    width: 100%;
+    max-width: 100%; /* Ajustar el tamaño máximo de la imagen */
+    height: auto;
+}
+
+.logo-img {
+    height: 50px; /* Ajustar el tamaño del logo */
+    width: auto;
+    margin-left: 10px; /* Margen izquierdo para separar del borde */
+}
+
+.navbar-brand .ms-3 {
+    margin-left: 1rem;
 }
