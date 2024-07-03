@@ -2,18 +2,9 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
 from django.contrib import messages
-from django.core.mail import send_mail
 from django.conf import settings
 from .models import Usuario
-from .forms import RegistroForm
-from .forms import LoginForm
-
-def enviar_correo_confirmacion(usuario):
-    subject = 'Bienvenido a Gestor de Eventos'
-    message = f'Hola {usuario.nombre},\n\nGracias por registrarte en Gestor de Eventos.'
-    email_from = settings.DEFAULT_FROM_EMAIL
-    recipient_list = [usuario.email]
-    send_mail(subject, message, email_from, recipient_list)
+from .forms import RegistroForm, LoginForm
 
 def registro(request):
     if request.method == 'POST':
@@ -21,13 +12,14 @@ def registro(request):
         if form.is_valid():
             try:
                 user = form.save()
-                enviar_correo_confirmacion(user)
-                messages.success(request, 'Registro exitoso. Revisa tu correo electrónico para la confirmación.')
+                messages.success(request, 'Registro exitoso. ¡Bienvenido a Gestor de Eventos!')
                 return redirect('login')
             except Exception as e:
                 messages.error(request, f'Error en el registro: {e}')
         else:
-            messages.error(request, 'Error en el registro. Por favor, intenta nuevamente.')
+            for field in form:
+                for error in field.errors:
+                    messages.error(request, f'Error en {field.label}: {error}')
     else:
         form = RegistroForm()
     return render(request, 'usuarios/registro.html', {'form': form})
