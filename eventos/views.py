@@ -6,15 +6,13 @@ from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
 
-
 def pagina_inicio(request):
     return render(request, 'eventos/pagina_inicio.html')
-
 
 def lista_eventos(request):
     query = request.GET.get('q')
     if query:
-        eventos_list = Evento.objects.filter(Q(nombre__icontains=query) | Q(descripcion__icontains=query))
+        eventos_list = Evento.objects.filter(Q(nombre__icontains=query) | Q(descripcion__icontains(query)))
     else:
         eventos_list = Evento.objects.all()
 
@@ -24,7 +22,6 @@ def lista_eventos(request):
 
     return render(request, 'eventos/lista_eventos.html', {'page_obj': page_obj, 'query': query})
 
-
 @login_required
 def crear_evento(request):
     if request.method == 'POST':
@@ -33,16 +30,17 @@ def crear_evento(request):
             evento = form.save(commit=False)
             evento.creador = request.user
             evento.save()
+            messages.success(request, 'Evento creado correctamente.')
             return redirect('lista_eventos')
     else:
         form = EventoForm()
     return render(request, 'eventos/crear_evento.html', {'form': form})
 
-
 def detalle_evento(request, evento_id):
     evento = get_object_or_404(Evento, id=evento_id)
-    return render(request, 'eventos/detalle_evento.html', {'evento': evento})
-
+    es_creador = request.user == evento.creador
+    esta_inscrito = evento.inscritos.filter(id=request.user.id).exists()
+    return render(request, 'eventos/detalle_evento.html', {'evento': evento, 'es_creador': es_creador, 'esta_inscrito': esta_inscrito})
 
 @login_required
 def editar_evento(request, evento_id):
@@ -57,7 +55,6 @@ def editar_evento(request, evento_id):
         form = EventoForm(instance=evento)
     return render(request, 'eventos/editar_evento.html', {'form': form, 'evento_id': evento.id})
 
-
 @login_required
 def eliminar_evento(request, evento_id):
     evento = get_object_or_404(Evento, id=evento_id, creador=request.user)
@@ -67,12 +64,12 @@ def eliminar_evento(request, evento_id):
         return redirect('lista_eventos')
     return render(request, 'eventos/eliminar_evento.html', {'evento': evento})
 
-
 @login_required
 def inscribirse_evento(request, evento_id):
     evento = get_object_or_404(Evento, id=evento_id)
-    if request.method == 'POST':
-        # Lógica para inscribirse al evento, por ejemplo, crear una relación en una tabla de inscripciones
+    if request.user in evento.inscritos.all():
+        messages.info(request, 'Ya estás inscrito en este evento.')
+    else:
+        evento.inscritos.add(request.user)
         messages.success(request, 'Te has inscrito exitosamente al evento.')
-        return redirect('detalle_evento', evento_id=evento.id)
-    return render(request, 'eventos/inscribirse_evento.html', {'evento': evento})
+    return redirect('detalle_evento', evento_id=evento.id)
