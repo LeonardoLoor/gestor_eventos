@@ -22,14 +22,22 @@
             <strong>Creador:</strong>
             <p>{{ evento.creador.email }}</p>
         </div>
+        <div class="mb-3">
+            <strong>Usuarios Inscritos:</strong>
+            <ul>
+                {% for usuario in evento.inscritos.all %}
+                    <li>{{ usuario.email }}</li>
+                {% endfor %}
+            </ul>
+        </div>
         <div class="d-flex justify-content-center">
-            {% if es_creador %}
+            {% if evento.creador == user %}
                 <a href="{% url 'editar_evento' evento.id %}" class="btn btn-warning mx-2">Editar</a>
                 <a href="{% url 'eliminar_evento' evento.id %}" class="btn btn-danger mx-2">Eliminar</a>
-            {% elif esta_inscrito %}
-                <span class="text-success">Ya estás inscrito en este evento.</span>
-            {% else %}
+            {% elif not inscrito %}
                 <a href="{% url 'inscribirse_evento' evento.id %}" class="btn btn-primary mx-2">Inscribirse</a>
+            {% else %}
+                <p class="text-success">Ya estás inscrito en este evento.</p>
             {% endif %}
         </div>
     </div>

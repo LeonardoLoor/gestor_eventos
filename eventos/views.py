@@ -1,3 +1,5 @@
+# eventos/views.py
+
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Evento
 from .forms import EventoForm
@@ -5,6 +7,7 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
+from inscripciones.models import Inscripcion  # Importar el modelo de inscripción si aún no se ha hecho
 
 def pagina_inicio(request):
     return render(request, 'eventos/pagina_inicio.html')
@@ -12,7 +15,7 @@ def pagina_inicio(request):
 def lista_eventos(request):
     query = request.GET.get('q')
     if query:
-        eventos_list = Evento.objects.filter(Q(nombre__icontains=query) | Q(descripcion__icontains(query)))
+        eventos_list = Evento.objects.filter(Q(nombre__icontains=query) | Q(descripcion__icontains=query))
     else:
         eventos_list = Evento.objects.all()
 
@@ -30,7 +33,7 @@ def crear_evento(request):
             evento = form.save(commit=False)
             evento.creador = request.user
             evento.save()
-            messages.success(request, 'Evento creado correctamente.')
+            messages.success(request, 'El evento ha sido creado exitosamente.')
             return redirect('lista_eventos')
     else:
         form = EventoForm()
@@ -38,9 +41,8 @@ def crear_evento(request):
 
 def detalle_evento(request, evento_id):
     evento = get_object_or_404(Evento, id=evento_id)
-    es_creador = request.user == evento.creador
-    esta_inscrito = evento.inscritos.filter(id=request.user.id).exists()
-    return render(request, 'eventos/detalle_evento.html', {'evento': evento, 'es_creador': es_creador, 'esta_inscrito': esta_inscrito})
+    inscrito = request.user in evento.inscritos.all()
+    return render(request, 'eventos/detalle_evento.html', {'evento': evento, 'inscrito': inscrito})
 
 @login_required
 def editar_evento(request, evento_id):
@@ -67,9 +69,16 @@ def eliminar_evento(request, evento_id):
 @login_required
 def inscribirse_evento(request, evento_id):
     evento = get_object_or_404(Evento, id=evento_id)
-    if request.user in evento.inscritos.all():
-        messages.info(request, 'Ya estás inscrito en este evento.')
-    else:
-        evento.inscritos.add(request.user)
-        messages.success(request, 'Te has inscrito exitosamente al evento.')
-    return redirect('detalle_evento', evento_id=evento.id)
+    if request.method == 'POST':
+        inscripcion, created = Inscripcion.objects.get_or_create(evento=evento, usuario=request.user)
+        if created:
+            messages.success(request, f'Te has inscrito exitosamente al evento. Fecha: {inscripcion.fecha_inscripcion}, Hora: {inscripcion.fecha_inscripcion.time()}, ID: {inscripcion.id}')
+        else:
+            messages.info(request, 'Ya estás inscrito en este evento.')
+        return redirect('detalle_evento', evento_id=evento.id)
+    return render(request, 'eventos/inscribirse_evento.html', {'evento': evento})
+
+@login_required
+def eventos_inscritos(request):
+    eventos = request.user.eventos_inscritos.all()
+    return render(request, 'eventos/eventos_inscritos.html', {'eventos': eventos})

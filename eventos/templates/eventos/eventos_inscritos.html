@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block title %}Eventos Inscritos{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Eventos en los que estás inscrito</h2>
+    <div class="list-group">
+        {% for evento in eventos %}
+            <a href="{% url 'detalle_evento' evento.id %}" class="list-group-item list-group-item-action">
+                {{ evento.nombre }} - {{ evento.fecha_hora }}
+            </a>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}
