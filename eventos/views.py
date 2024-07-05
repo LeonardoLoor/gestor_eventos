@@ -70,11 +70,13 @@ def eliminar_evento(request, evento_id):
 def inscribirse_evento(request, evento_id):
     evento = get_object_or_404(Evento, id=evento_id)
     if request.method == 'POST':
-        inscripcion, created = Inscripcion.objects.get_or_create(evento=evento, usuario=request.user)
-        if created:
-            messages.success(request, f'Te has inscrito exitosamente al evento. Fecha: {inscripcion.fecha_inscripcion}, Hora: {inscripcion.fecha_inscripcion.time()}, ID: {inscripcion.id}')
-        else:
-            messages.info(request, 'Ya estás inscrito en este evento.')
+        action = request.POST.get('action')
+        if action == 'inscribirse':
+            evento.inscritos.add(request.user)
+            messages.success(request, 'Te has inscrito exitosamente al evento.')
+        elif action == 'cancelar':
+            evento.inscritos.remove(request.user)
+            messages.success(request, 'Tu inscripción ha sido cancelada.')
         return redirect('detalle_evento', evento_id=evento.id)
     return render(request, 'eventos/inscribirse_evento.html', {'evento': evento})
 
