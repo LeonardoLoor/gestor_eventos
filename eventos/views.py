@@ -7,7 +7,6 @@ from django.core.paginator import Paginator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.db.models import Q
-from inscripciones.models import Inscripcion  # Importar el modelo de inscripción si aún no se ha hecho
 
 def pagina_inicio(request):
     return render(request, 'eventos/pagina_inicio.html')
@@ -78,7 +77,6 @@ def inscribirse_evento(request, evento_id):
             evento.inscritos.remove(request.user)
             messages.success(request, 'Tu inscripción ha sido cancelada.')
         return redirect('detalle_evento', evento_id=evento.id)
-    return render(request, 'eventos/inscribirse_evento.html', {'evento': evento})
 
 @login_required
 def eventos_inscritos(request):
