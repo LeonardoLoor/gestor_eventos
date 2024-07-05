@@ -1,3 +1,5 @@
+/* styles.css */
+
 body {
     font-family: 'Roboto', sans-serif;
     margin: 0;
@@ -6,7 +8,7 @@ body {
 }
 
 .container {
-    padding: 20px;
+    padding: 20px; /* Agregar padding al contenido */
 }
 
 .card {
@@ -62,7 +64,7 @@ button:hover {
 }
 
 .navbar-logo {
-    height: 50px; /* Ajustar el tamaño del logo */
+    height: 30px; /* Tamaño reducido del logo */
     margin-right: 10px;
 }
 
@@ -103,7 +105,7 @@ button:hover {
     min-height: 100vh;
 }
 
-.img-fluid {
+img.img-fluid {
     max-width: 100%;
     height: auto;
 }
@@ -145,16 +147,66 @@ button:hover {
 
 .welcome-image {
     width: 100%;
-    max-width: 100%; /* Ajustar el tamaño máximo de la imagen */
+    max-width: 400px; /* Ajustar el tamaño máximo de la imagen */
     height: auto;
 }
 
 .logo-img {
     height: 50px; /* Ajustar el tamaño del logo */
     width: auto;
-    margin-left: 10px; /* Margen izquierdo para separar del borde */
 }
 
-.navbar-brand .ms-3 {
-    margin-left: 1rem;
+@media (max-width: 780px) {
+    .row {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .col-md-6 {
+        width: 100%;
+        padding: 0;
+    }
+
+    .navbar-nav {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .navbar-nav .nav-item {
+        margin-left: 0;
+        width: 100%;
+        text-align: center;
+    }
+
+    .navbar-nav .nav-item a {
+        width: 100%;
+        font-size: 1.2rem;
+        padding: 15px 25px;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        font-size: 1.5rem;
+    }
+
+    .welcome-image {
+        max-width: 100%;
+    }
+
+    .content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .content h1 {
+        margin-bottom: 10px;
+    }
+
+    .content p {
+        margin-bottom: 10px;
+    }
+
+    .content img {
+        margin-bottom: 10px;
+    }
 }
