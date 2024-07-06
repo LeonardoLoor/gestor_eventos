@@ -3,7 +3,9 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.forms import AuthenticationForm
 from .models import Usuario
 
+# Formulario de registro de usuario, basado en UserCreationForm
 class RegistroForm(UserCreationForm):
+    # Campo de email
     email = forms.EmailField(
         required=True,
         widget=forms.EmailInput(attrs={'class': 'form-control', 'placeholder': 'example@domain.com'}),
@@ -12,6 +14,7 @@ class RegistroForm(UserCreationForm):
             'invalid': 'Ingrese un correo electrónico válido.'
         }
     )
+    # Campo de nombre
     nombre = forms.CharField(
         max_length=255,
         required=True,
@@ -20,6 +23,7 @@ class RegistroForm(UserCreationForm):
             'required': 'Este campo es obligatorio.'
         }
     )
+    # Campo de contraseña
     password1 = forms.CharField(
         label="Contraseña",
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Contraseña'}),
@@ -27,6 +31,7 @@ class RegistroForm(UserCreationForm):
             'required': 'Este campo es obligatorio.',
         }
     )
+    # Campo de confirmación de contraseña
     password2 = forms.CharField(
         label="Confirmar Contraseña",
         widget=forms.PasswordInput(attrs={'class': 'form-control', 'placeholder': 'Confirmar Contraseña'}),
@@ -40,12 +45,14 @@ class RegistroForm(UserCreationForm):
         model = Usuario
         fields = ['email', 'nombre', 'password1', 'password2']
 
+    # Validación personalizada para el campo email
     def clean_email(self):
         email = self.cleaned_data.get('email')
         if Usuario.objects.filter(email=email).exists():
             raise forms.ValidationError('Este correo electrónico ya está registrado.')
         return email
     
+    # Sobrescribir el método save para guardar el usuario correctamente
     def save(self, commit=True):
         user = super(RegistroForm, self).save(commit=False)
         user.email = self.cleaned_data["email"]
@@ -54,6 +61,7 @@ class RegistroForm(UserCreationForm):
             user.save()
         return user
 
+# Formulario de inicio de sesión de usuario, basado en AuthenticationForm
 class LoginForm(AuthenticationForm):
     username = forms.CharField(
         widget=forms.TextInput(attrs={'class': 'form-control', 'placeholder': 'Tu Usuario'})

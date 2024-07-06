@@ -5,9 +5,11 @@
 {% block content %}
 <div class="container mt-5">
     <h2 class="mb-4">Editar Evento</h2>
+    <!-- Formulario para editar un evento existente -->
     <form method="post" class="needs-validation" novalidate>
         {% csrf_token %}
         {{ form.as_p }}
+        <!-- Botón para enviar los cambios -->
         <button type="submit" class="btn btn-primary">Guardar cambios</button>
     </form>
 </div>

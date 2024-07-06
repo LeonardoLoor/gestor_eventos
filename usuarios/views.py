@@ -6,6 +6,7 @@ from django.conf import settings
 from .models import Usuario
 from .forms import RegistroForm, LoginForm
 
+# Vista para el registro de usuarios
 def registro(request):
     if request.method == 'POST':
         form = RegistroForm(request.POST)
@@ -24,6 +25,7 @@ def registro(request):
         form = RegistroForm()
     return render(request, 'usuarios/registro.html', {'form': form})
 
+# Vista para el inicio de sesión de usuarios
 def login(request):
     if request.method == 'POST':
         form = LoginForm(data=request.POST)
@@ -43,6 +45,7 @@ def login(request):
         form = LoginForm()
     return render(request, 'usuarios/login.html', {'form': form})
 
+# Vista para el cierre de sesión de usuarios
 def logout(request):
     auth_logout(request)
     messages.success(request, 'Has cerrado sesión correctamente.')

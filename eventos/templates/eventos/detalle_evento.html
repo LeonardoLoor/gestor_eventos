@@ -5,6 +5,7 @@
 {% block content %}
 <div class="container mt-5">
     <h2 class="mb-4 text-center">{{ evento.nombre }}</h2>
+    <!-- Card que contiene los detalles del evento -->
     <div class="card p-4 shadow">
         <div class="mb-3">
             <strong>Descripción:</strong>
@@ -25,11 +26,13 @@
         <div class="mb-3">
             <strong>Usuarios Inscritos:</strong>
             <ul>
+                <!-- Lista de usuarios inscritos al evento -->
                 {% for usuario in evento.inscritos.all %}
                     <li>{{ usuario.email }}</li>
                 {% endfor %}
             </ul>
         </div>
+        <!-- Sección de botones para editar, eliminar, inscribirse o cancelar inscripción -->
         <div class="d-flex justify-content-center flex-column align-items-center">
             {% if evento.creador == user %}
                 <div class="d-flex justify-content-center mb-3">
@@ -37,12 +40,14 @@
                     <a href="{% url 'eliminar_evento' evento.id %}" class="btn btn-danger mx-2">Eliminar</a>
                 </div>
             {% elif not inscrito %}
+                <!-- Formulario para inscribirse al evento -->
                 <form method="post" action="{% url 'inscribirse_evento' evento.id %}" class="mb-3">
                     {% csrf_token %}
                     <input type="hidden" name="action" value="inscribirse">
                     <button type="submit" class="btn btn-primary mx-2">Inscribirse</button>
                 </form>
             {% else %}
+                <!-- Mensaje y formulario para cancelar inscripción -->
                 <p class="text-success mb-3">Ya estás inscrito en este evento.</p>
                 <form method="post" action="{% url 'inscribirse_evento' evento.id %}">
                     {% csrf_token %}

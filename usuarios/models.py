@@ -1,6 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
+# Manager personalizado para el modelo de usuario
 class UsuarioManager(BaseUserManager):
     def create_user(self, email, nombre, password=None):
         if not email:
@@ -16,6 +17,7 @@ class UsuarioManager(BaseUserManager):
         usuario.save(using=self._db)
         return usuario
 
+# Modelo personalizado de usuario
 class Usuario(AbstractBaseUser):
     email = models.EmailField(verbose_name="Correo Electrónico", max_length=255, unique=True)
     nombre = models.CharField(max_length=255)

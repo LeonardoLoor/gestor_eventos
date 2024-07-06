@@ -11,6 +11,9 @@ import os
 
 from django.core.asgi import get_asgi_application
 
+# Establezco la configuración predeterminada para el entorno ASGI
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'gestor_eventos.settings')
 
+# Obtengo la aplicación ASGI para el proyecto
 application = get_asgi_application()
+

@@ -3,10 +3,13 @@
 {% block title %}Mis Eventos{% endblock %}
 
 {% block content %}
-<h2>Mis Eventos</h2>
-<ul>
-    {% for inscripcion in inscripciones %}
-        <li>{{ inscripcion.evento.nombre }}</li>
-    {% endfor %}
-</ul>
+<div class="container mt-5">
+    <h2 class="mb-4 text-center">Mis Eventos</h2>
+    <ul class="list-group">
+        <!-- Iterar sobre las inscripciones y mostrar el nombre de cada evento -->
+        {% for inscripcion in inscripciones %}
+            <li class="list-group-item">{{ inscripcion.evento.nombre }}</li>
+        {% endfor %}
+    </ul>
+</div>
 {% endblock %}

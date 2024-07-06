@@ -12,26 +12,25 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 import os
 from pathlib import Path
 
+# Defino la ruta base del proyecto
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Configuraciones rápidas de desarrollo - no aptas para producción
+# Ver https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
-
-# SECURITY WARNING: keep the secret key used in production secret!
+# ADVERTENCIA DE SEGURIDAD: Mantén la clave secreta utilizada en producción en secreto.
 SECRET_KEY = 'django-insecure-k1xn8%zj+a6)kmt)qh03a03yl3n^h41_+@2jofgq+#@l74*g#$'
 
-# SECURITY WARNING: don't run with debug turned on in production!
+# ADVERTENCIA DE SEGURIDAD: No ejecutes con el debug activado en producción.
 DEBUG = True
 
+# Lista de hosts permitidos para acceder a la aplicación
 ALLOWED_HOSTS = []
 
-
-# Application definition
-
+# Definición de aplicaciones instaladas
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -39,11 +38,12 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'usuarios',
-    'eventos',
-    'inscripciones',
+    'usuarios',  # Aplicación personalizada para la gestión de usuarios
+    'eventos',  # Aplicación personalizada para la gestión de eventos
+    'inscripciones',  # Aplicación personalizada para la gestión de inscripciones
 ]
 
+# Middleware
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -54,8 +54,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
+# Configuración de la URL principal
 ROOT_URLCONF = 'gestor_eventos.urls'
 
+# Configuración de las plantillas
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -72,71 +74,70 @@ TEMPLATES = [
     },
 ]
 
-
+# Configuración de la aplicación WSGI
 WSGI_APPLICATION = 'gestor_eventos.wsgi.application'
 
-
-# Database
+# Configuración de la base de datos
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'db_gestor_eventos',
-        'USER': 'postgres',
-        'PASSWORD': 'davidloor076',
-        'HOST': 'localhost',
-        'PORT': '5432',
+        'ENGINE': 'django.db.backends.postgresql',  # Utilizo PostgreSQL como motor de base de datos
+        'NAME': 'db_gestor_eventos',  # Nombre de la base de datos
+        'USER': 'postgres',  # Usuario de la base de datos
+        'PASSWORD': 'davidloor076',  # Contraseña de la base de datos
+        'HOST': 'localhost',  # Host de la base de datos
+        'PORT': '5432',  # Puerto de la base de datos
     }
 }
 
-
-# Password validation
+# Validadores de contraseñas
 # https://docs.djangoproject.com/en/5.0/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
-        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
+        'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',  # Validador de similitud de atributos
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
+        'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',  # Validador de longitud mínima
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator',  # Validador de contraseñas comunes
     },
     {
-        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
+        'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',  # Validador de contraseñas numéricas
     },
 ]
 
-
-# Internationalization
+# Internacionalización
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
+LANGUAGE_CODE = 'en-us'  # Código de idioma
 
-LANGUAGE_CODE = 'en-us'
+TIME_ZONE = 'UTC'  # Zona horaria
 
-TIME_ZONE = 'UTC'
+USE_I18N = True  # Habilitar la internacionalización
 
-USE_I18N = True
+USE_TZ = True  # Usar zona horaria
 
-USE_TZ = True
-
-
-# Static files (CSS, JavaScript, Images)
+# Archivos estáticos (CSS, JavaScript, Imágenes)
 # https://docs.djangoproject.com/en/5.0/howto/static-files/
+STATIC_URL = 'static/'  # URL de archivos estáticos
 
-STATIC_URL = 'static/'
-
-# Default primary key field type
+# Tipo de campo de clave primaria predeterminado
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
-
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Modelo de usuario personalizado
 AUTH_USER_MODEL = 'usuarios.Usuario'
+
+# URL de inicio de sesión
 LOGIN_URL = 'login'
+
+# Redirección después de iniciar sesión
 LOGIN_REDIRECT_URL = 'lista_eventos'
+
+# Redirección después de cerrar sesión
 LOGOUT_REDIRECT_URL = 'login'
 
+# Directorios de archivos estáticos
 STATICFILES_DIRS = [
     BASE_DIR / "static",
 ]

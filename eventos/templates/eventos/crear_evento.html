@@ -4,10 +4,13 @@
 
 {% block content %}
 <div class="d-flex justify-content-center align-items-center min-vh-100">
+    <!-- Card que contiene el formulario para crear un evento -->
     <div class="card p-4 shadow" style="width: 30rem;">
         <h2 class="mb-4 text-center">Crear Evento</h2>
+        <!-- Formulario para crear un evento -->
         <form method="post" class="needs-validation" novalidate>
             {% csrf_token %}
+            <!-- Campo para el nombre del evento -->
             <div class="form-group">
                 {{ form.nombre.label_tag }}
                 {{ form.nombre }}
@@ -17,6 +20,7 @@
                     {% endfor %}
                 </div>
             </div>
+            <!-- Campo para la descripción del evento -->
             <div class="form-group">
                 {{ form.descripcion.label_tag }}
                 {{ form.descripcion }}
@@ -26,6 +30,7 @@
                     {% endfor %}
                 </div>
             </div>
+            <!-- Campo para la ubicación del evento -->
             <div class="form-group">
                 {{ form.ubicacion.label_tag }}
                 {{ form.ubicacion }}
@@ -35,6 +40,7 @@
                     {% endfor %}
                 </div>
             </div>
+            <!-- Campo para la fecha y hora del evento -->
             <div class="form-group">
                 {{ form.fecha_hora.label_tag }}
                 {{ form.fecha_hora }}
@@ -44,8 +50,10 @@
                     {% endfor %}
                 </div>
             </div>
+            <!-- Botón para enviar el formulario -->
             <button type="submit" class="btn btn-primary w-100">Crear Evento</button>
         </form>
+        <!-- Mostrar mensajes de éxito o error -->
         {% if messages %}
             <div class="mt-4">
                 {% for message in messages %}

@@ -11,6 +11,9 @@ import os
 
 from django.core.wsgi import get_wsgi_application
 
+# Establezco la configuración predeterminada para el entorno WSGI
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'gestor_eventos.settings')
 
+# Obtengo la aplicación WSGI para el proyecto
 application = get_wsgi_application()
+
